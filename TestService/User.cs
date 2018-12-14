@@ -21,5 +21,8 @@ namespace TestService
         [DataMember]
         public string email { get; set; }
 
+        [DataMember]
+        public bool deleted { get; set; }
+
     }
 }

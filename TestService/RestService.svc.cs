@@ -11,6 +11,34 @@ namespace TestService
     // NOTE: In order to launch WCF Test Client for testing this service, please select RestService.svc or RestService.svc.cs at the Solution Explorer and start debugging.
     public class RestService : IRestService
     {
+        public string DeleteUser(string id)
+        {
+            User user;
+            int userId;
+            int.TryParse(id, out userId);
+            using (TablesContext context = new TablesContext())
+            {
+                user = context.Users.Find(userId);
+                if (user != null)
+                {
+                    if (!user.deleted)
+                    {
+                        user.deleted = true;
+                        context.SaveChanges();
+                        return "User successfully deleted.";
+                    }
+                    else
+                    {
+                        return "User has already been deleted.";
+                    }
+                }
+                else
+                {
+                    return "User not found...";
+                }
+            }
+        }
+
         public Book GetBook(string id)
         {
             Book book;
@@ -37,6 +65,8 @@ namespace TestService
             return user;
         }
 
+
+
         public Book NewBook(Book book)
         {
             using (TablesContext context = new TablesContext())
@@ -57,6 +87,34 @@ namespace TestService
             }
 
             return user;
+        }
+
+        public string RestoreUser(string email)
+        {
+            using (TablesContext context = new TablesContext())
+            {
+                var users = from u in context.Users where u.email.Equals(email) select u;
+                if (users != null)
+                {
+                    if (users.First().deleted)
+                    {
+                        users.First().deleted = false;
+                        context.SaveChanges();
+                        return "User successfully restored";
+                    }
+                    else
+                    {
+                        return "The user with this email has not been deleted";
+                    }
+                }
+                else
+                {
+                    return "User with such email not found...";
+                }
+                
+            }
+
+            
         }
     }
 }

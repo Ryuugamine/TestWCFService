@@ -20,11 +20,26 @@ namespace TestService
         User GetUser(string id);
 
         [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "delete_user/{id}")]
+        String DeleteUser(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "restore_user/{email}")]
+        String RestoreUser(string email);
+
+        [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_user")]
         User NewUser(User user);
+
         /*
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -46,6 +61,8 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_book")]
         Book NewBook(Book book);
+
+
 
 
     }
