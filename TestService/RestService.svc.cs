@@ -27,22 +27,22 @@ namespace TestService
                         {
                             user.Deleted = true;
                             context.SaveChanges();
-                            return "User successfully deleted.";
+                            return Constants.USER_DELETED;
                         }
                         else
                         {
-                            return "User has already been deleted.";
+                            return Constants.USER_ALREADY_DELETED;
                         }
                     }
                     else
                     {
-                        return "User not found...";
+                        return Constants.USER_NOT_FOUND;
                     }
                 }
             } 
             else
             {
-                return "Please, enter int value";
+                return Constants.ENTER_INT;
             }
         }
 
@@ -57,20 +57,20 @@ namespace TestService
                     resp.Book = context.Books.Find(bookId);
                     if (resp.Book!=null)
                     {
-                        resp.Status = 0;
-                        resp.Message = "Success";
+                        resp.Status = (int)Constants.STATUSES.OK;
+                        resp.Message = Constants.SUCCESS;
                     }
                     else
                     {
-                        resp.Status = 1;
-                        resp.Message = "Book not found...";
+                        resp.Status = (int)Constants.STATUSES.ERROR;
+                        resp.Message = Constants.BOOK_NOT_FOUND;
                     }
                 }
             }
             else
             {
-                resp.Status = 1;
-                resp.Message = "Please, enter int value.";
+                resp.Status = (int)Constants.STATUSES.ERROR;
+                resp.Message = Constants.ENTER_INT;
             }
 
             return resp;
@@ -89,8 +89,8 @@ namespace TestService
                     order = context.Orders.Find(orderId);
                     if (order != null)
                     {
-                        resp.Status = 0;
-                        resp.Message = "Success";
+                        resp.Status = (int)Constants.STATUSES.OK;
+                        resp.Message = Constants.SUCCESS;
                         resp.OrderData = new OrderRequest
                         {
                             Id = order.Id,
@@ -112,15 +112,15 @@ namespace TestService
                     }
                     else
                     {
-                        resp.Status = 1;
-                        resp.Message = "Order not found...";
+                        resp.Status = (int)Constants.STATUSES.ERROR;
+                        resp.Message = Constants.ORDER_NOT_FOUND;
                     }
                 }
             }
             else
             {
-                resp.Status = 1;
-                resp.Message = "Please, enter int value.";
+                resp.Status = (int)Constants.STATUSES.ERROR;
+                resp.Message = Constants.ENTER_INT;
             }
 
             return resp;
@@ -137,20 +137,20 @@ namespace TestService
                     resp.User = context.Users.Find(userId);
                     if (resp.User != null)
                     {
-                        resp.Status = 0;
-                        resp.Message = "Success";
+                        resp.Status = (int)Constants.STATUSES.OK;
+                        resp.Message = Constants.SUCCESS;
                     }
                     else
                     {
-                        resp.Status = 1;
-                        resp.Message = "User not found...";
+                        resp.Status = (int)Constants.STATUSES.ERROR;
+                        resp.Message = Constants.USER_NOT_FOUND;
                     }                    
                 }
             }
             else
             {
-                resp.Status = 1;
-                resp.Message = "Please, enter int value.";
+                resp.Status = (int)Constants.STATUSES.ERROR;
+                resp.Message = Constants.ENTER_INT;
             }
             
             return resp;
@@ -207,11 +207,11 @@ namespace TestService
                 {
                     context.Users.Add(user);
                     context.SaveChanges();
-                    return "User created.";
+                    return Constants.USER_CREATED;
                 }
                 else
                 {
-                    return "User with this email already exists";
+                    return Constants.USER_ALREADY_EXISTS;
                 }
                     
             }
@@ -230,16 +230,16 @@ namespace TestService
                     {
                         users.First().Deleted = false;
                         context.SaveChanges();
-                        return "User successfully restored";
+                        return Constants.SUCCESSFUL_RESTORE;
                     }
                     else
                     {
-                        return "The user with this email has not been deleted";
+                        return Constants.USER_NOT_DELETED;
                     }
                 }
                 else
                 {
-                    return "User with such email not found...";
+                    return Constants.USER_NOT_FOUND;
                 }
                 
             }

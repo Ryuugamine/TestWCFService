@@ -74,6 +74,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="IRestService.cs" />
     <Compile Include="Models\BooksInOrder.cs" />
