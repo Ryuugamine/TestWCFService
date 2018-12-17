@@ -62,7 +62,7 @@ namespace TestService.Network
                 using (TablesContext context = new TablesContext())
                 {
                     resp.User = context.Users.Find(userId);
-                    if (resp.User != null)
+                    if (resp.User != null && !resp.User.Deleted)
                     {
                         resp.Status = (int)Constants.STATUSES.OK;
                         resp.Message = Constants.SUCCESS;

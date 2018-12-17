@@ -17,7 +17,7 @@ namespace TestService.Network
                 using (TablesContext context = new TablesContext())
                 {
                     resp.Book = context.Books.Find(bookId);
-                    if (resp.Book != null)
+                    if (resp.Book != null && !resp.Book.Deleted)
                     {
                         resp.Status = (int)Constants.STATUSES.OK;
                         resp.Message = Constants.SUCCESS;
