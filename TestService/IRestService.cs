@@ -52,8 +52,15 @@ namespace TestService
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "get_order/{id}")]
-        OrderResponse GetOrder(string id);
+            UriTemplate = "delete_book/{id}")]
+        string DeleteBook(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "restore_book/{id}")]
+        string RestoreBook(string id);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -61,6 +68,20 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_book")]
         Book NewBook(Book book);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "get_order/{id}")]
+        OrderResponse GetOrder(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "pay_order/{id}")]
+        string PayOrder(string id);
 
         [OperationContract]
         [WebInvoke(Method = "POST",

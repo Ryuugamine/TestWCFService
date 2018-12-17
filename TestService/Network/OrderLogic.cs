@@ -86,5 +86,40 @@ namespace TestService.Network
                 return order;
             }
         }
+
+        public string PayOrder(string id)
+        {
+            int orderId;
+            if (int.TryParse(id, out orderId))
+            {
+                Order order;
+                using (TablesContext context = new TablesContext())
+                {
+                    order = context.Orders.Find(orderId);
+                    if (order != null)
+                    {
+                        if (!order.Status)
+                        {
+                            order.Status = true;
+                            context.SaveChanges();
+                            return Constants.ORDER_PAYED;
+                        }
+                        else
+                        {
+                            return Constants.ORDER_ALREADY_PAYED;
+                        }
+                    }
+                    else
+                    {
+                        return Constants.ORDER_NOT_FOUND;
+                    }
+                }               
+            }
+            else
+            {
+                return Constants.ENTER_INT;
+            }
+            
+        }
     }
 }

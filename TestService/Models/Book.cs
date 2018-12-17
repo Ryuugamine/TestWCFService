@@ -20,5 +20,8 @@ namespace TestService
 
         [DataMember]
         public string Description { get; set; }
+
+        [DataMember]
+        public bool Deleted { get; set; }
     }
 }

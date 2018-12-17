@@ -22,9 +22,17 @@ namespace TestService.Network
                     {
                         if (!user.Deleted)
                         {
-                            user.Deleted = true;
-                            context.SaveChanges();
-                            return Constants.USER_DELETED;
+                            var orders = from o in context.Orders where o.UserId.Equals(userId) select o;
+                            if (orders != null && orders.Count() > 0)
+                            {
+                                return Constants.USER_CANT_DELETED;
+                            }
+                            else
+                            {
+                                user.Deleted = true;
+                                context.SaveChanges();
+                                return Constants.USER_DELETED;
+                            }                            
                         }
                         else
                         {
@@ -103,13 +111,13 @@ namespace TestService.Network
             using (TablesContext context = new TablesContext())
             {
                 var users = from u in context.Users where u.Email.Equals(email) select u;
-                if (users != null)
+                if (users != null && users.Count()>0)
                 {
                     if (users.First().Deleted)
                     {
                         users.First().Deleted = false;
                         context.SaveChanges();
-                        return Constants.SUCCESSFUL_RESTORE;
+                        return Constants.USER_RESTORED;
                     }
                     else
                     {

@@ -38,6 +38,77 @@ namespace TestService.Network
             return resp;
         }
 
+        public string DeleteBook(string id)
+        {
+            int bookId;
+            Book book;
+            if (int.TryParse(id, out bookId))
+            {
+                using (TablesContext context = new TablesContext())
+                {
+                    book = context.Books.Find(bookId);
+                    if (book != null)
+                    {
+                        if (!book.Deleted)
+                        {
+                            var books = from b in context.BooksInOrders where b.BookId.Equals(bookId) select b;
+                            if (books != null && books.Count()>0)
+                            {
+                                return Constants.BOOK_CANT_DELETED;
+                            }
+                            else
+                            {
+                                book.Deleted = true;
+                                context.SaveChanges();
+                                return Constants.BOOK_DELETED;
+                            }
+                        }
+                        else
+                        {
+                            return Constants.BOOK_ALREADY_DELETED;
+                        }                        
+                    }
+                    else
+                    {
+                        return Constants.BOOK_NOT_FOUND;
+                    }
+                }
+            }
+            else
+            {
+                return Constants.ENTER_INT;
+            }
+            
+        }
+
+        public string RestoreBook(string id)
+        {
+            int bookId;
+            Book book;
+            if (int.TryParse(id, out bookId))
+            {
+                using (TablesContext context = new TablesContext())
+                {
+                    book = context.Books.Find(bookId);
+                    if (book.Deleted)
+                    {
+                        book.Deleted = false;
+                        context.SaveChanges();
+                        return Constants.BOOK_RESTORED;
+                    }
+                    else
+                    {
+                        return Constants.BOOK_NOT_DELETED; ;
+                    }                    
+                }
+            }
+            else
+            {
+                return Constants.ENTER_INT;
+            }
+            
+        }
+
         public Book NewBook(Book book)
         {
             using (TablesContext context = new TablesContext())
