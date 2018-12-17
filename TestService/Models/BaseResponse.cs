@@ -7,9 +7,12 @@ using System.Web;
 namespace TestService.Models
 {
     [DataContract]
-    public class UserResponse : BaseResponse
+    public class BaseResponse
     {
         [DataMember]
-        public User User { get; set; }
+        public int Status { get; set; }
+
+        [DataMember]
+        public string Message { get; set; }
     }
 }

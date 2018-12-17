@@ -7,14 +7,8 @@ using System.Web;
 namespace TestService.Models
 {
     [DataContract]
-    public class OrderResponse
+    public class OrderResponse : BaseResponse
     {
-        [DataMember]
-        public int Status { get; set; }
-
-        [DataMember]
-        public string Message { get; set; }
-
         [DataMember]
         public OrderRequest OrderData { get; set; }
     }
