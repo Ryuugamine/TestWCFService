@@ -69,17 +69,25 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="RestService.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Book.cs" />
+    <Compile Include="Models\Book.cs" />
     <Compile Include="IRestService.cs" />
+    <Compile Include="Models\BooksInOrder.cs" />
+    <Compile Include="Models\BookResponse.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderRequest.cs" />
+    <Compile Include="Models\OrderResponse.cs" />
+    <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RestService.svc.cs">
       <DependentUpon>RestService.svc</DependentUpon>
     </Compile>
     <Compile Include="TablesContext.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

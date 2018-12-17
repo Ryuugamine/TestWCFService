@@ -4,21 +4,21 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace TestService
+namespace TestService.Models
 {
     [DataContract]
-    public class Book
+    public class Order
     {
         [DataMember]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string name { get; set; }
+        public int UserId { get; set; }
 
         [DataMember]
-        public int cost { get; set; }
+        public int TotalPayment { get; set; }
 
         [DataMember]
-        public string description { get; set; }
+        public bool Status { get; set; }
     }
 }

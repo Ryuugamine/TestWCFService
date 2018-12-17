@@ -7,22 +7,18 @@ using System.Web;
 namespace TestService
 {
     [DataContract]
-    public class User
+    public class Book
     {
         [DataMember]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [DataMember]
-        public string firstName { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
-        public string lastName { get; set; }
+        public int Cost { get; set; }
 
         [DataMember]
-        public string email { get; set; }
-
-        [DataMember]
-        public bool deleted { get; set; }
-
+        public string Description { get; set; }
     }
 }

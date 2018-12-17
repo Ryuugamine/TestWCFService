@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using TestService.Models;
 
 namespace TestService
 {
@@ -15,54 +16,144 @@ namespace TestService
         {
             User user;
             int userId;
-            int.TryParse(id, out userId);
-            using (TablesContext context = new TablesContext())
+            if (int.TryParse(id, out userId))
             {
-                user = context.Users.Find(userId);
-                if (user != null)
+                using (TablesContext context = new TablesContext())
                 {
-                    if (!user.deleted)
+                    user = context.Users.Find(userId);
+                    if (user != null)
                     {
-                        user.deleted = true;
-                        context.SaveChanges();
-                        return "User successfully deleted.";
+                        if (!user.Deleted)
+                        {
+                            user.Deleted = true;
+                            context.SaveChanges();
+                            return "User successfully deleted.";
+                        }
+                        else
+                        {
+                            return "User has already been deleted.";
+                        }
                     }
                     else
                     {
-                        return "User has already been deleted.";
+                        return "User not found...";
                     }
                 }
-                else
+            } 
+            else
+            {
+                return "Please, enter int value";
+            }
+        }
+
+        public BookResponse GetBook(string id)
+        {
+            BookResponse resp = new BookResponse();
+            int bookId;
+            if (int.TryParse(id, out bookId))
+            {
+                using (TablesContext context = new TablesContext())
                 {
-                    return "User not found...";
+                    resp.Book = context.Books.Find(bookId);
+                    if (resp.Book!=null)
+                    {
+                        resp.Status = 0;
+                        resp.Message = "Success";
+                    }
+                    else
+                    {
+                        resp.Status = 1;
+                        resp.Message = "Book not found...";
+                    }
                 }
             }
-        }
-
-        public Book GetBook(string id)
-        {
-            Book book;
-            int bookId;
-            int.TryParse(id, out bookId);
-            using (TablesContext context = new TablesContext())
+            else
             {
-                book = context.Books.Find(bookId);
+                resp.Status = 1;
+                resp.Message = "Please, enter int value.";
             }
 
-            return book;
+            return resp;
         }
 
-        public User GetUser(string id)
+        public OrderResponse GetOrder(string id)
         {
-            User user;
+            OrderResponse resp = new OrderResponse();
+            int orderId;
+            if (int.TryParse(id, out orderId))
+            {
+                Order order;
+                List<int> booksInOrder = new List<int>();
+                using (TablesContext context = new TablesContext())
+                {
+                    order = context.Orders.Find(orderId);
+                    if (order != null)
+                    {
+                        resp.Status = 0;
+                        resp.Message = "Success";
+                        resp.OrderData = new OrderRequest
+                        {
+                            Id = order.Id,
+                            UserId = order.UserId,
+                            TotalPayment = order.TotalPayment,
+                            Status = order.Status
+                        };
+                        
+
+                        var books = from b in context.BooksInOrders where b.OrderId.Equals(orderId) select b;
+                        if(books != null && books.Count()>0)
+                        {
+                            books.ToList<BooksInOrder>().ForEach(delegate (BooksInOrder book)
+                            {
+                                booksInOrder.Add(book.BookId);
+                            });
+                            resp.OrderData.Books = booksInOrder;
+                        }
+                    }
+                    else
+                    {
+                        resp.Status = 1;
+                        resp.Message = "Order not found...";
+                    }
+                }
+            }
+            else
+            {
+                resp.Status = 1;
+                resp.Message = "Please, enter int value.";
+            }
+
+            return resp;
+        }
+
+        public UserResponse GetUser(string id)
+        {
+            UserResponse resp = new UserResponse();
             int userId;
-            int.TryParse(id, out userId);
-            using (TablesContext context = new TablesContext())
+            if (int.TryParse(id, out userId))
             {
-                user = context.Users.Find(userId);
+                using (TablesContext context = new TablesContext())
+                {
+                    resp.User = context.Users.Find(userId);
+                    if (resp.User != null)
+                    {
+                        resp.Status = 0;
+                        resp.Message = "Success";
+                    }
+                    else
+                    {
+                        resp.Status = 1;
+                        resp.Message = "User not found...";
+                    }                    
+                }
             }
-
-            return user;
+            else
+            {
+                resp.Status = 1;
+                resp.Message = "Please, enter int value.";
+            }
+            
+            return resp;
         }
 
 
@@ -78,27 +169,66 @@ namespace TestService
             return book;
         }
 
-        public User NewUser(User user)
+        public Order NewOrder(OrderRequest orderRequest)
         {
             using (TablesContext context = new TablesContext())
             {
-                context.Users.Add(user);
+                Order order = new Order
+                {
+                    UserId = orderRequest.UserId,
+                    TotalPayment = orderRequest.TotalPayment,
+                    Status = orderRequest.Status,
+                };
+
+                context.Orders.Add(order);
                 context.SaveChanges();
+              
+                orderRequest.Books.ForEach(delegate (int book)
+                {
+                    BooksInOrder bookInOrder = new BooksInOrder
+                    {
+                        OrderId = context.Orders.ToList<Order>().Last().Id,
+                        BookId = book
+                    };
+                    context.BooksInOrders.Add(bookInOrder);
+                    context.SaveChanges();
+                });
+                
+                return order;
+            }            
+        }
+
+        public String NewUser(User user)
+        {
+            using (TablesContext context = new TablesContext())
+            {
+                var users = from u in context.Users where u.Email.Equals(user.Email) select u;
+                if (users == null || users.Count() == 0)
+                {
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                    return "User created.";
+                }
+                else
+                {
+                    return "User with this email already exists";
+                }
+                    
             }
 
-            return user;
+            
         }
 
         public string RestoreUser(string email)
         {
             using (TablesContext context = new TablesContext())
             {
-                var users = from u in context.Users where u.email.Equals(email) select u;
+                var users = from u in context.Users where u.Email.Equals(email) select u;
                 if (users != null)
                 {
-                    if (users.First().deleted)
+                    if (users.First().Deleted)
                     {
-                        users.First().deleted = false;
+                        users.First().Deleted = false;
                         context.SaveChanges();
                         return "User successfully restored";
                     }

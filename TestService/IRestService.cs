@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using TestService.Models;
 
 namespace TestService
 {
@@ -17,7 +18,7 @@ namespace TestService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "get_user/{id}")]
-        User GetUser(string id);
+        UserResponse GetUser(string id);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -38,22 +39,21 @@ namespace TestService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_user")]
-        User NewUser(User user);
+        String NewUser(User user);
 
-        /*
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-            RequestFormat = WebMessageFormat.Json,
-            ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "new_user")]
-        User DeleteUser(User user);
-        */
         [OperationContract]
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "get_book/{id}")]
-        Book GetBook(string id);
+        BookResponse GetBook(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "get_order/{id}")]
+        OrderResponse GetOrder(string id);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -61,6 +61,13 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_book")]
         Book NewBook(Book book);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "new_order")]
+        Order NewOrder(OrderRequest orderRequest);
 
 
 
