@@ -1,13 +1,34 @@
-﻿using System;
+﻿using SwaggerWcf.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.ServiceModel.Activation;
 using System.Web;
 using TestService.Models;
 
 namespace TestService.Network
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [SwaggerWcf("/v1/rest")]
     public partial class NetworkLogic : IRestService
     {
+        [SwaggerWcfTag("Books")]
+        [SwaggerWcfResponse(HttpStatusCode.Created, "Book created, value in the response body with id updated")]
+        [SwaggerWcfResponse(HttpStatusCode.BadRequest, "Bad request", true)]
+        [SwaggerWcfResponse(HttpStatusCode.InternalServerError,
+        "Internal error (can be forced using ERROR_500 as book title)", true)]
+        public Book NewBook(Book book)
+        {
+            using (TablesContext context = new TablesContext())
+            {
+                context.Books.Add(book);
+                context.SaveChanges();
+            }
+
+            return book;
+        }
+
         public BookResponse GetBook(string id)
         {
             BookResponse resp = new BookResponse();
@@ -24,6 +45,7 @@ namespace TestService.Network
                     }
                     else
                     {
+                        resp.Book = null;
                         resp.Status = (int)Constants.STATUSES.ERROR;
                         resp.Message = Constants.BOOK_NOT_FOUND;
                     }
@@ -36,6 +58,27 @@ namespace TestService.Network
             }
 
             return resp;
+        }
+
+        public String UpdateBook(Book updateData)
+        {
+            using (TablesContext context = new TablesContext())
+            {
+                Book book = context.Books.Find(updateData.Id);
+                if (book != null && !book.Deleted)
+                {
+                    book.Name = updateData.Name;
+                    book.Cost = updateData.Cost;
+                    book.Description = updateData.Description;
+                    context.SaveChanges();
+                    return Constants.BOOK_UPDATED;
+                }
+                else
+                {
+                    return Constants.BOOK_NOT_FOUND;
+                }
+
+            }
         }
 
         public string DeleteBook(string id)
@@ -107,17 +150,6 @@ namespace TestService.Network
                 return Constants.ENTER_INT;
             }
             
-        }
-
-        public Book NewBook(Book book)
-        {
-            using (TablesContext context = new TablesContext())
-            {
-                context.Books.Add(book);
-                context.SaveChanges();
-            }
-
-            return book;
         }
     }
 }

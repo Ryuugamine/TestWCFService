@@ -22,6 +22,7 @@ namespace TestService
         public static string BOOK_DELETED = "Book successfully deleted.";
         public static string BOOK_CANT_DELETED = "Book can not been deleted, becouse already contains in one or more orders.";
         public static string BOOK_RESTORED = "Book successfully restored";
+        public static string BOOK_UPDATED = "Book successfully updated";
 
         public static string USER_NOT_DELETED = "The user with this email has not been deleted.";
         public static string USER_DELETED = "User successfully deleted.";
@@ -31,5 +32,6 @@ namespace TestService
         public static string USER_CREATED = "User created.";
         public static string USER_ALREADY_DELETED = "User has already been deleted.";
         public static string USER_RESTORED = "User successfully restored";
+        public static string USER_UPDATED = "User successfully updated";
     }
 }

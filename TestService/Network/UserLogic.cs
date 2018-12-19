@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.ServiceModel.Activation;
 using System.Web;
 using TestService;
 using TestService.Models;
@@ -51,8 +53,6 @@ namespace TestService.Network
             }
         }
 
-        
-
         public UserResponse GetUser(string id)
         {
             UserResponse resp = new UserResponse();
@@ -70,6 +70,7 @@ namespace TestService.Network
                     else
                     {
                         resp.Status = (int)Constants.STATUSES.ERROR;
+                        resp.User = null;
                         resp.Message = Constants.USER_NOT_FOUND;
                     }
                 }
@@ -102,8 +103,25 @@ namespace TestService.Network
                 }
 
             }
+        }
 
+        public String UpdateUser(User updateData)
+        {
+            using (TablesContext context = new TablesContext())
+            {
+                User user = context.Users.Find(updateData.Id);
+                if (user != null && !user.Deleted)
+                {
+                    user = updateData;
+                    context.SaveChanges();
+                    return Constants.USER_UPDATED;
+                }
+                else
+                {
+                    return Constants.USER_NOT_FOUND;
+                }
 
+            }
         }
 
         public string RestoreUser(string email)

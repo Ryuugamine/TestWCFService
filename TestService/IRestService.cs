@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SwaggerWcf.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -42,6 +43,13 @@ namespace TestService
         String NewUser(User user);
 
         [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "update_user")]
+        String UpdateUser(User updateData);
+
+        [OperationContract]
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
@@ -62,12 +70,21 @@ namespace TestService
             UriTemplate = "restore_book/{id}")]
         string RestoreBook(string id);
 
+
+        [SwaggerWcfPath("Create book", "Create a book on the store")]
         [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_book")]
         Book NewBook(Book book);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "update_book")]
+        String UpdateBook(Book updateData);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
