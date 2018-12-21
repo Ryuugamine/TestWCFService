@@ -6,6 +6,7 @@ using System.Web;
 
 namespace TestService.Models
 {
+    
     [DataContract]
     public class Order
     {
@@ -21,4 +22,5 @@ namespace TestService.Models
         [DataMember]
         public bool Status { get; set; }
     }
+    
 }

@@ -11,6 +11,7 @@ namespace TestService.Network
 {
     public partial class NetworkLogic : IRestService
     {
+        
         public string DeleteUser(string id)
         {
             User user;
@@ -112,7 +113,9 @@ namespace TestService.Network
                 User user = context.Users.Find(updateData.Id);
                 if (user != null && !user.Deleted)
                 {
-                    user = updateData;
+                    user.FirstName = updateData.FirstName;
+                    user.LastName = updateData.LastName;
+                    user.Email = updateData.Email;
                     context.SaveChanges();
                     return Constants.USER_UPDATED;
                 }
@@ -148,8 +151,7 @@ namespace TestService.Network
                 }
 
             }
-
-
         }
+        
     }
 }

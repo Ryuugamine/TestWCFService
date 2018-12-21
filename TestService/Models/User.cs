@@ -6,6 +6,7 @@ using System.Web;
 
 namespace TestService
 {
+    
     [DataContract]
     public class User
     {
@@ -25,4 +26,5 @@ namespace TestService
         public bool Deleted { get; set; }
 
     }
+    
 }

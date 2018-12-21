@@ -6,10 +6,12 @@ using System.Web;
 
 namespace TestService.Models
 {
+    
     [DataContract]
     public class UserResponse : BaseResponse
     {
         [DataMember]
         public User User { get; set; }
     }
+    
 }

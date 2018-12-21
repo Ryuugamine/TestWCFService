@@ -14,6 +14,7 @@ namespace TestService
     [ServiceContract]
     public interface IRestService
     {
+        
         [OperationContract]
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
@@ -69,8 +70,7 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "restore_book/{id}")]
         string RestoreBook(string id);
-
-
+        
         [SwaggerWcfPath("Create book", "Create a book on the store")]
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -78,7 +78,7 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_book")]
         Book NewBook(Book book);
-
+        
         [OperationContract]
         [WebInvoke(Method = "POST",
             RequestFormat = WebMessageFormat.Json,
@@ -106,9 +106,6 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "new_order")]
         Order NewOrder(OrderRequest orderRequest);
-
-
-
 
     }
 }

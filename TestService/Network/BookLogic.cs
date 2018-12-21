@@ -9,15 +9,8 @@ using TestService.Models;
 
 namespace TestService.Network
 {
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    [SwaggerWcf("/v1/rest")]
     public partial class NetworkLogic : IRestService
     {
-        [SwaggerWcfTag("Books")]
-        [SwaggerWcfResponse(HttpStatusCode.Created, "Book created, value in the response body with id updated")]
-        [SwaggerWcfResponse(HttpStatusCode.BadRequest, "Bad request", true)]
-        [SwaggerWcfResponse(HttpStatusCode.InternalServerError,
-        "Internal error (can be forced using ERROR_500 as book title)", true)]
         public Book NewBook(Book book)
         {
             using (TablesContext context = new TablesContext())
@@ -151,5 +144,6 @@ namespace TestService.Network
             }
             
         }
+        
     }
 }

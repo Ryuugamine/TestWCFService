@@ -9,6 +9,7 @@ namespace TestService.Network
 {
     public partial class NetworkLogic : IRestService
     {
+        
         public OrderResponse GetOrder(string id)
         {
             OrderResponse resp = new OrderResponse();
@@ -122,5 +123,6 @@ namespace TestService.Network
             }
             
         }
+        
     }
 }

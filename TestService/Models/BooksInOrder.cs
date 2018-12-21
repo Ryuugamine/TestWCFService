@@ -6,6 +6,7 @@ using System.Web;
 
 namespace TestService.Models
 {
+    
     [DataContract]
     public class BooksInOrder
     {
@@ -18,4 +19,5 @@ namespace TestService.Models
         [DataMember]
         public int BookId { get; set; }
     }
+    
 }

@@ -6,10 +6,12 @@ using System.Web;
 
 namespace TestService.Models
 {
+
     [DataContract]
     public class BookResponse : BaseResponse
     {
         [DataMember]
         public Book Book { get; set; }
     }
+    
 }

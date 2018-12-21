@@ -6,6 +6,7 @@ using System.Web;
 
 namespace TestService.Models
 {
+    
     [DataContract]
     public class BaseResponse
     {
@@ -15,4 +16,5 @@ namespace TestService.Models
         [DataMember]
         public string Message { get; set; }
     }
+    
 }

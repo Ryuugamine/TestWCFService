@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Activation;
+using System.ServiceModel.Web;
 using System.Web;
 using System.Web.Routing;
 using System.Web.Security;
@@ -15,7 +16,9 @@ namespace TestService
 
         protected void Application_Start(object sender, EventArgs e)
         {
-           RouteTable.Routes.Add(new System.ServiceModel.Activation.ServiceRoute("api-docs", new WebServiceHostFactory(), typeof(SwaggerWcfEndpoint)));
+             RouteTable.Routes.Add(new System.ServiceModel.Activation.ServiceRoute("api-docs", new WebServiceHostFactory(), typeof(SwaggerWcfEndpoint)));
+            var swaggerHost = new WebServiceHost(typeof(SwaggerWcfEndpoint));
+            swaggerHost.Open();
         }
 
         protected void Session_Start(object sender, EventArgs e)
