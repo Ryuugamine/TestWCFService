@@ -12,23 +12,23 @@ namespace TestService
     [SwaggerWcfDefinition(ExternalDocsUrl = "http://en.wikipedia.org/wiki/Book", ExternalDocsDescription = "Description of a book")]
     public class Book
     {
-        [DataMember]
+        [DataMember(Name = "id")]
         [Description("Book ID")]
         public int Id { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "name")]
         [Description("Book Name")]
         public string Name { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "cost")]
         [Description("Book Cost")]
         public int Cost { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "description")]
         [Description("Book Description")]
         public string Description { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "deleted")]
         public bool Deleted { get; set; }
     }
 }

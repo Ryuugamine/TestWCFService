@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="RestService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TestService.Models" />
+      <xsd:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TestService" />
+      <xsd:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IRestService_GetUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUser" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_GetUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_RestoreUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RestoreUser" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_RestoreUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RestoreUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_NewUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:NewUser" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_NewUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NewUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_UpdateUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUser" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_UpdateUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_GetBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBook" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_GetBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_DeleteBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBook" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_DeleteBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_RestoreBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:RestoreBook" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_RestoreBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RestoreBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_NewBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:NewBook" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_NewBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NewBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_UpdateBook_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBook" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_UpdateBook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateBookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_GetOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrder" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_GetOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_PayOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:PayOrder" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_PayOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PayOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_NewOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:NewOrder" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_NewOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NewOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IRestService">
+    <wsdl:operation name="GetUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetUser" message="tns:IRestService_GetUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetUserResponse" message="tns:IRestService_GetUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/DeleteUser" message="tns:IRestService_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/DeleteUserResponse" message="tns:IRestService_DeleteUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RestoreUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/RestoreUser" message="tns:IRestService_RestoreUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/RestoreUserResponse" message="tns:IRestService_RestoreUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NewUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/NewUser" message="tns:IRestService_NewUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/NewUserResponse" message="tns:IRestService_NewUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/UpdateUser" message="tns:IRestService_UpdateUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/UpdateUserResponse" message="tns:IRestService_UpdateUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetBook" message="tns:IRestService_GetBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetBookResponse" message="tns:IRestService_GetBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/DeleteBook" message="tns:IRestService_DeleteBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/DeleteBookResponse" message="tns:IRestService_DeleteBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RestoreBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/RestoreBook" message="tns:IRestService_RestoreBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/RestoreBookResponse" message="tns:IRestService_RestoreBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NewBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/NewBook" message="tns:IRestService_NewBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/NewBookResponse" message="tns:IRestService_NewBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateBook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/UpdateBook" message="tns:IRestService_UpdateBook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/UpdateBookResponse" message="tns:IRestService_UpdateBook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetOrder" message="tns:IRestService_GetOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetOrderResponse" message="tns:IRestService_GetOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PayOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/PayOrder" message="tns:IRestService_PayOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/PayOrderResponse" message="tns:IRestService_PayOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NewOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/NewOrder" message="tns:IRestService_NewOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/NewOrderResponse" message="tns:IRestService_NewOrder_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="RestService" />
+</wsdl:definitions>

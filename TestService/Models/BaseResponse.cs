@@ -10,10 +10,10 @@ namespace TestService.Models
     [DataContract]
     public class BaseResponse
     {
-        [DataMember]
+        [DataMember (Name = "status")]
         public int Status { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "message")]
         public string Message { get; set; }
     }
     

@@ -10,7 +10,7 @@ namespace TestService.Models
     [DataContract]
     public class UserResponse : BaseResponse
     {
-        [DataMember]
+        [DataMember(Name = "user")]
         public User User { get; set; }
     }
     

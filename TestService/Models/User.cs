@@ -10,19 +10,19 @@ namespace TestService
     [DataContract]
     public class User
     {
-        [DataMember]
+        [DataMember(Name = "id")]
         public int Id { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "firstName")]
         public string FirstName { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "lastName")]
         public string LastName { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "email")]
         public string Email { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "deleted")]
         public bool Deleted { get; set; }
 
     }

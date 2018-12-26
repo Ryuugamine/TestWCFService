@@ -10,19 +10,19 @@ namespace TestService.Models
     [DataContract]
     public class OrderRequest
     {
-        [DataMember]
+        [DataMember(Name = "id")]
         public int Id { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "userId")]
         public int UserId { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "totalPayment")]
         public int TotalPayment { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "status")]
         public bool Status { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "books")]
         public List<int> Books { get; set; }
     }
     

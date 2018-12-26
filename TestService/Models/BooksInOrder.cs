@@ -10,13 +10,13 @@ namespace TestService.Models
     [DataContract]
     public class BooksInOrder
     {
-        [DataMember]
+        [DataMember(Name = "id")]
         public int Id { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "orderId")]
         public int OrderId { get; set; }
 
-        [DataMember]
+        [DataMember(Name = "bookId")]
         public int BookId { get; set; }
     }
     

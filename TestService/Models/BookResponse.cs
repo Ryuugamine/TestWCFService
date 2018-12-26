@@ -10,7 +10,7 @@ namespace TestService.Models
     [DataContract]
     public class BookResponse : BaseResponse
     {
-        [DataMember]
+        [DataMember(Name = "book")]
         public Book Book { get; set; }
     }
     
