@@ -12,6 +12,9 @@ namespace TestService
         public static string ENTER_INT = "Please, enter int value.";
         public static string SUCCESS = "Success.";
 
+        public static string DEF_PASS = "pass";
+        public static string WRONG_USER_DATA = "The username or password you entered is incorrect";
+
         public static string ORDER_NOT_FOUND = "Order not found...";
         public static string ORDER_PAYED = "Order successfully payed";
         public static string ORDER_ALREADY_PAYED = "Order has already been payed";

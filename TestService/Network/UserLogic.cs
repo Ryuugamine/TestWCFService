@@ -11,7 +11,29 @@ namespace TestService.Network
 {
     public partial class NetworkLogic : IRestService
     {
-        
+        public string Auth(Auth data)
+        {
+            if (data.Password.Equals(Constants.DEF_PASS))
+            {
+                using (TablesContext context = new TablesContext())
+                {
+                    var users = from u in context.Users where u.Email.Equals(data.Email) select u;
+                    if (users != null && users.Count() > 0)
+                    {
+                        return Constants.SUCCESS;
+                    }
+                    else
+                    {
+                        return Constants.WRONG_USER_DATA;
+                    }
+                }
+            }
+            else
+            {
+                return Constants.WRONG_USER_DATA;
+            }
+        }
+
         public string DeleteUser(string id)
         {
             User user;
@@ -102,7 +124,6 @@ namespace TestService.Network
                 {
                     return Constants.USER_ALREADY_EXISTS;
                 }
-
             }
         }
 
@@ -152,6 +173,5 @@ namespace TestService.Network
 
             }
         }
-        
     }
 }

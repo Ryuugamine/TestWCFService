@@ -14,7 +14,13 @@ namespace TestService
     [ServiceContract]
     public interface IRestService
     {
-        
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "auth")]
+        String Auth(Auth data);
+
         [OperationContract]
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
@@ -56,6 +62,13 @@ namespace TestService
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "get_book/{id}")]
         BookResponse GetBook(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "get_all_books")]
+        AllBooksResponse AllBooks();
 
         [OperationContract]
         [WebInvoke(Method = "GET",

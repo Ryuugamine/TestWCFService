@@ -22,6 +22,18 @@ namespace TestService.Network
             return book;
         }
 
+        public AllBooksResponse AllBooks()
+        {
+            using (TablesContext context = new TablesContext())
+            {
+                AllBooksResponse resp = new AllBooksResponse();
+                resp.Status = 0;
+                resp.Message = "Success";
+                resp.Books = context.Books.ToList<Book>();
+                return resp;
+            }
+        }
+
         public BookResponse GetBook(string id)
         {
             BookResponse resp = new BookResponse();

@@ -267,6 +267,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AllBooksResponse.cs" />
+    <Compile Include="Models\Auth.cs" />
     <Compile Include="Models\BaseResponse.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="IRestService.cs" />

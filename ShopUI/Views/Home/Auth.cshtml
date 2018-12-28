@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Auth</title>
+</head>
+<body>
+    <form method="post" action="">
+        <input type="hidden" value="@ViewBag.BookId" name="BookId" />
+        <p>Введите email: </p>
+        <input type="text" name="Email" />
+        <p>Введите пароль :</p>
+        <input type="text" name="Password" />
+        <input type="submit" value="Отправить" />
+        <p>@ViewBag.Msg</p>
+    </form>
+</body>
+</html>
