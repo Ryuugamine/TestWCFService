@@ -11,8 +11,9 @@ namespace TestService.Network
 {
     public partial class NetworkLogic : IRestService
     {
-        public string Auth(Auth data)
+        public UserResponse Auth(Auth data)
         {
+            UserResponse response = new UserResponse();
             if (data.Password.Equals(Constants.DEF_PASS))
             {
                 using (TablesContext context = new TablesContext())
@@ -20,18 +21,23 @@ namespace TestService.Network
                     var users = from u in context.Users where u.Email.Equals(data.Email) select u;
                     if (users != null && users.Count() > 0)
                     {
-                        return Constants.SUCCESS;
+                        response.Status = (int) Constants.STATUSES.OK;
+                        response.Message = Constants.SUCCESS;
+                        response.User = users.First<User>();
                     }
                     else
                     {
-                        return Constants.WRONG_USER_DATA;
+                        response.Status = (int)Constants.STATUSES.ERROR;
+                        response.Message = Constants.WRONG_USER_DATA;
                     }
                 }
             }
             else
             {
-                return Constants.WRONG_USER_DATA;
+                response.Status = (int)Constants.STATUSES.ERROR;
+                response.Message = Constants.WRONG_USER_DATA;
             }
+            return response;
         }
 
         public string DeleteUser(string id)

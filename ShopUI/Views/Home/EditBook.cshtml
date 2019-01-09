@@ -1,0 +1,27 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditBook</title>
+</head>
+<body>
+    <form method="post" action="">
+        <p>Название: </p>
+        <input type="text" name="Name" value="@ViewBag.Name" />
+        <p>Цена:</p>
+        <input type="text" name="Cost" value="@ViewBag.Cost" />
+        <p>Описание:</p>
+        <input type="text" name="Description" value="@ViewBag.Description" />
+        <input type="submit" value="Отправить" />
+
+        <p><a href="/Home/DeleteBook/@ViewBag.Id">Удалить книгу</a></p>
+        <p>@ViewBag.Msg</p>
+    </form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Book</title>
+</head>
+<body>
+        <p>@ViewBag.Name </p>
+        <p>Цена: @ViewBag.Cost</p>
+        <p>Описание:</p>
+        <p>@ViewBag.Description</p>
+
+        <p><a href="/Home/EditBook/@ViewBag.Id">Изменить</a></p>
+</body>
+</html>

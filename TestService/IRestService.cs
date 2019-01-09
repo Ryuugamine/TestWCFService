@@ -19,7 +19,7 @@ namespace TestService
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "auth")]
-        String Auth(Auth data);
+        UserResponse Auth(Auth data);
 
         [OperationContract]
         [WebInvoke(Method = "GET",

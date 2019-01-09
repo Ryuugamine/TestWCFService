@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Buy</title>
+    <style>
+        p {
+            padding: 5px; /* Поля вокруг текста */
+            padding-right: 90px; /* Поле справа */
+            text-align: justify; /* Выравнивание по ширине */
+        }
+
+        a{
+            margin-left: 16px;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><p>Список книг</p></td>
+        </tr>
+       @foreach (var b in ViewBag.Books)
+        {
+           <tr>
+               <td><p>@b</p></td>
+           </tr>
+        }
+    </table>
+    <div>
+        <p>Итого: @ViewBag.TotalPayment <a href="/Home/CreateOrder">Оформить</a> </p>
+    </div>
+</body>
+</html>
