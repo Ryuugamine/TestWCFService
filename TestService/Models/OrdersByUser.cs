@@ -6,12 +6,10 @@ using System.Web;
 
 namespace TestService.Models
 {
-    
     [DataContract]
-    public class OrderResponse : BaseResponse
+    public class OrdersByUser : BaseResponse
     {
         [DataMember(Name = "orderData")]
-        public OrderData OrderData { get; set; }
+        public List<OrderData> OrderData { get; set; }
     }
-    
 }

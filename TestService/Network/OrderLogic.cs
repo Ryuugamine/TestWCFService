@@ -9,7 +9,59 @@ namespace TestService.Network
 {
     public partial class NetworkLogic : IRestService
     {
-        
+        public OrdersByUser GetOrdersByUserId(string id)
+        {
+            OrdersByUser resp = new OrdersByUser();
+            int userId;
+            if (int.TryParse(id, out userId))
+            {
+                resp.OrderData = new List<OrderData>();
+                using (TablesContext context = new TablesContext())
+                {
+                    var orders = from o in context.Orders where o.UserId.Equals(userId) select o;
+                    if (orders != null && orders.Count() > 0)
+                    {
+                        orders.ToList<Order>().ForEach(delegate (Order order)
+                        {
+                            List<Book> booksInOrder = new List<Book>();
+                            OrderData current = new OrderData
+                            {
+                                Id = order.Id,
+                                UserId = order.UserId,
+                                TotalPayment = order.TotalPayment,
+                                Status = order.Status
+                            };
+
+                            var books = from b in context.BooksInOrders where b.OrderId.Equals(current.Id) select b;
+                            if (books != null && books.Count() > 0)
+                            {
+                                books.ToList<BooksInOrder>().ForEach(delegate (BooksInOrder book)
+                                {
+                                    booksInOrder.Add(context.Books.Find(book.BookId));
+                                });
+                            }
+                            current.Books = booksInOrder;
+                            resp.OrderData.Add(current);
+                        });
+                        resp.Status = (int)Constants.STATUSES.OK;
+                        resp.Message = Constants.SUCCESS;
+                    }
+                    else
+                    {
+                        resp.Status = (int)Constants.STATUSES.ERROR;
+                        resp.Message = Constants.NO_ORDERS;
+                    }
+                }      
+            }
+            else
+            {
+                resp.Status = (int)Constants.STATUSES.ERROR;
+                resp.Message = Constants.ENTER_INT;
+            }
+
+            return resp;
+        }
+
         public OrderResponse GetOrder(string id)
         {
             OrderResponse resp = new OrderResponse();
@@ -17,7 +69,7 @@ namespace TestService.Network
             if (int.TryParse(id, out orderId))
             {
                 Order order;
-                List<int> booksInOrder = new List<int>();
+                List<Book> booksInOrder = new List<Book>();
                 using (TablesContext context = new TablesContext())
                 {
                     order = context.Orders.Find(orderId);
@@ -25,7 +77,7 @@ namespace TestService.Network
                     {
                         resp.Status = (int)Constants.STATUSES.OK;
                         resp.Message = Constants.SUCCESS;
-                        resp.OrderData = new OrderRequest
+                        resp.OrderData = new OrderData
                         {
                             Id = order.Id,
                             UserId = order.UserId,
@@ -39,7 +91,7 @@ namespace TestService.Network
                         {
                             books.ToList<BooksInOrder>().ForEach(delegate (BooksInOrder book)
                             {
-                                booksInOrder.Add(book.BookId);
+                                booksInOrder.Add(context.Books.Find(book.BookId));
                             });
                             resp.OrderData.Books = booksInOrder;
                         }

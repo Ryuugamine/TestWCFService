@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>OrdersList</title>
+</head>
+<body>
+    <p>Заказ</p>
+    <table>
+        <tr>
+            <td><p>Список книг</p></td>
+            <td><p>Цена</p></td>
+            <td><p>Статус</p></td>
+        </tr>
+        @foreach (var o in ViewBag.Orders)
+        {
+            <tr>
+                <td>
+                    <table>
+                        @foreach(var b in o.Books)
+                        {
+                            <tr>
+                                <td>@b.Name</td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td><p>@o.TotalPayment</p></td>
+                @if (o.Status)
+                {
+                    <td><p>Оплачен</p></td>
+                }
+                else
+                {
+                    <td><p><a href="/Home/Pay/@o.Id">Оплатить</a></p></td>
+                }
+            </tr>
+        }
+    </table>
+    
+</body>
+</html>

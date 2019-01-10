@@ -49,6 +49,43 @@ namespace ShopUI.Controllers
         {
             ViewBag.Books = GlobalVariables.booksNames;
             ViewBag.TotalPayment = GlobalVariables.totalPayment;
+            ViewBag.Msg = GlobalVariables.responseMessage;
+            GlobalVariables.responseMessage = null;
+
+            return View();
+        }
+
+        public ActionResult Pay(int id)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/pay_order/" + id);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                var resp = reader.ReadToEnd();
+                if (!resp.Contains("success"))
+                {
+                    GlobalVariables.responseMessage = resp;
+                }
+            }
+            return RedirectToAction("OrdersList");
+        }
+
+        public ActionResult OrdersList()
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/get_user_orders/" + GlobalVariables.currentUser.Id);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                var resp = reader.ReadToEnd();
+                OrdersByUser result = new JavaScriptSerializer().Deserialize<OrdersByUser>(resp);
+                ViewBag.Orders = result.OrderData;
+            }
             
             return View();
         }
@@ -165,20 +202,26 @@ namespace ShopUI.Controllers
         [HttpGet]
         public ActionResult CreateOrder()
         {
-            OrderRequest request = new OrderRequest
-            {
-                Books = GlobalVariables.booksInOrder,
-                UserId = GlobalVariables.currentUser.Id,
-                TotalPayment = GlobalVariables.totalPayment,
-                Status = true
-            };
+            if (GlobalVariables.booksInOrder.Count>0) { 
+                OrderRequest request = new OrderRequest
+                {
+                    Books = GlobalVariables.booksInOrder,
+                    UserId = GlobalVariables.currentUser.Id,
+                    TotalPayment = GlobalVariables.totalPayment,
+                };
             
-            SendNewOrderRequest(request);
+                SendNewOrderRequest(request);
 
-            GlobalVariables.booksInOrder.Clear();
-            GlobalVariables.booksNames.Clear();
-            GlobalVariables.totalPayment = 0;
-            return RedirectToAction("Index");
+                GlobalVariables.booksInOrder.Clear();
+                GlobalVariables.booksNames.Clear();
+                GlobalVariables.totalPayment = 0;
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                GlobalVariables.responseMessage = "Add one or more books for create order";
+                return RedirectToAction("Buy");
+            }
         }
 
         [HttpGet]

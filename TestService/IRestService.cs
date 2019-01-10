@@ -110,6 +110,13 @@ namespace TestService
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "get_user_orders/{id}")]
+        OrdersByUser GetOrdersByUserId(string id);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "pay_order/{id}")]
         string PayOrder(string id);
 

@@ -11,7 +11,7 @@ namespace ShopUI.Models
     public class OrderResponse : BaseResponse
     {
         [DataMember(Name = "orderData")]
-        public OrderRequest OrderData { get; set; }
+        public OrderData OrderData { get; set; }
     }
     
 }

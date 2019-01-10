@@ -4,14 +4,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace TestService.Models
+namespace ShopUI.Models
 {
-    
     [DataContract]
-    public class OrderResponse : BaseResponse
+    public class OrdersByUser : BaseResponse
     {
         [DataMember(Name = "orderData")]
-        public OrderData OrderData { get; set; }
+        public List<OrderData> OrderData { get; set; }
     }
-    
 }

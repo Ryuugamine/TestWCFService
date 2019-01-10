@@ -275,8 +275,10 @@
     <Compile Include="Models\BooksInOrder.cs" />
     <Compile Include="Models\BookResponse.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderData.cs" />
     <Compile Include="Models\OrderRequest.cs" />
     <Compile Include="Models\OrderResponse.cs" />
+    <Compile Include="Models\OrdersByUser.cs" />
     <Compile Include="Models\UserResponse.cs" />
     <Compile Include="Network\BookLogic.cs" />
     <Compile Include="Network\OrderLogic.cs" />

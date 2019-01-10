@@ -16,6 +16,7 @@ namespace TestService
         public static string WRONG_USER_DATA = "The username or password you entered is incorrect";
 
         public static string ORDER_NOT_FOUND = "Order not found...";
+        public static string NO_ORDERS = "This user did not order anything.";
         public static string ORDER_PAYED = "Order successfully payed";
         public static string ORDER_ALREADY_PAYED = "Order has already been payed";
         
