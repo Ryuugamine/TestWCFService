@@ -2,22 +2,28 @@
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/TestService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/TestService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="User">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Deleted" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="deleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="User" nillable="true" type="tns:User" />
   <xs:complexType name="Book">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Cost" type="xs:int" />
-      <xs:element minOccurs="0" name="Deleted" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="cost" type="xs:int" />
+      <xs:element minOccurs="0" name="deleted" type="xs:boolean" />
+      <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="id" type="xs:int" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Book" nillable="true" type="tns:Book" />
+  <xs:complexType name="ArrayOfBook">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Book" nillable="true" type="tns:Book" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBook" nillable="true" type="tns:ArrayOfBook" />
 </xs:schema>

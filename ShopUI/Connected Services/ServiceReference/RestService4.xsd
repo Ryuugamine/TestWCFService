@@ -2,6 +2,20 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/TestService.Models" />
   <xs:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/TestService" />
+  <xs:element name="Auth">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="data" nillable="true" type="q1:Auth" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AuthResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="AuthResult" nillable="true" type="q2:UserResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetUser">
     <xs:complexType>
       <xs:sequence>
@@ -12,7 +26,7 @@
   <xs:element name="GetUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetUserResult" nillable="true" type="q1:UserResponse" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetUserResult" nillable="true" type="q3:UserResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,7 +61,7 @@
   <xs:element name="NewUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="user" nillable="true" type="q2:User" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="user" nillable="true" type="q4:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -61,7 +75,7 @@
   <xs:element name="UpdateUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="updateData" nillable="true" type="q3:User" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="updateData" nillable="true" type="q5:User" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -82,7 +96,19 @@
   <xs:element name="GetBookResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetBookResult" nillable="true" type="q4:BookResponse" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetBookResult" nillable="true" type="q6:BookResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllBooks">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AllBooksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="AllBooksResult" nillable="true" type="q7:AllBooksResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -117,21 +143,21 @@
   <xs:element name="NewBook">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="book" nillable="true" type="q5:Book" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="book" nillable="true" type="q8:Book" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NewBookResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="NewBookResult" nillable="true" type="q6:Book" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="NewBookResult" nillable="true" type="q9:Book" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateBook">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="updateData" nillable="true" type="q7:Book" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TestService" minOccurs="0" name="updateData" nillable="true" type="q10:Book" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -152,7 +178,21 @@
   <xs:element name="GetOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetOrderResult" nillable="true" type="q8:OrderResponse" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetOrderResult" nillable="true" type="q11:OrderResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrdersByUserId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="id" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetOrdersByUserIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="GetOrdersByUserIdResult" nillable="true" type="q12:OrdersByUser" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -173,14 +213,14 @@
   <xs:element name="NewOrder">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="orderRequest" nillable="true" type="q9:OrderRequest" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="orderRequest" nillable="true" type="q13:OrderRequest" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="NewOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="NewOrderResult" nillable="true" type="q10:Order" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/TestService.Models" minOccurs="0" name="NewOrderResult" nillable="true" type="q14:Order" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

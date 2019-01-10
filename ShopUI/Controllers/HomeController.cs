@@ -1,4 +1,4 @@
-﻿using ShopUI.Models;
+﻿using ShopUI.ServiceReference;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,29 +13,21 @@ namespace ShopUI.Controllers
 {
     public class HomeController : Controller
     {
-
+        RestServiceClient client = new RestServiceClient();
         public ActionResult Index()
         {
-            ViewBag.Books = GetAllBooks().Books;
+            ViewBag.Books = client.AllBooks().books;
             return View();
         }
 
         public ActionResult Book(int id)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/get_book/"+id);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            BookResponse result = client.GetBook(id.ToString());
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                var resp = reader.ReadToEnd();
-                BookResponse result = new JavaScriptSerializer().Deserialize<BookResponse>(resp);
-                ViewBag.Name = result.Book.Name;
-                ViewBag.Cost = result.Book.Cost;
-                ViewBag.Description = result.Book.Description;
-                ViewBag.Id = id;
-            }
+            ViewBag.Name = result.book.name;
+            ViewBag.Cost = result.book.cost;
+            ViewBag.Description = result.book.description;
+            ViewBag.Id = id;
 
             return View();
         }
@@ -57,35 +49,20 @@ namespace ShopUI.Controllers
 
         public ActionResult Pay(int id)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/pay_order/" + id);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            var resp = client.PayOrder(id.ToString());
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
+            if (!resp.Contains("success"))
             {
-                var resp = reader.ReadToEnd();
-                if (!resp.Contains("success"))
-                {
-                    GlobalVariables.responseMessage = resp;
-                }
+                GlobalVariables.responseMessage = resp;
             }
+
             return RedirectToAction("OrdersList");
         }
 
         public ActionResult OrdersList()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/get_user_orders/" + GlobalVariables.currentUser.Id);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                var resp = reader.ReadToEnd();
-                OrdersByUser result = new JavaScriptSerializer().Deserialize<OrdersByUser>(resp);
-                ViewBag.Orders = result.OrderData;
-            }
+            OrdersByUser result = client.GetOrdersByUserId(GlobalVariables.currentUser.id.ToString());
+            ViewBag.Orders = result.orderData;
             
             return View();
         }
@@ -94,44 +71,54 @@ namespace ShopUI.Controllers
         {
             ViewBag.Msg = GlobalVariables.responseMessage;
             GlobalVariables.responseMessage = null;
-            ViewBag.Id = GlobalVariables.currentUser.Id;
-            ViewBag.Email = GlobalVariables.currentUser.Email;
-            ViewBag.FirstName = GlobalVariables.currentUser.FirstName;
-            ViewBag.LastName = GlobalVariables.currentUser.LastName;
+            ViewBag.Id = GlobalVariables.currentUser.id;
+            ViewBag.Email = GlobalVariables.currentUser.email;
+            ViewBag.FirstName = GlobalVariables.currentUser.firstName;
+            ViewBag.LastName = GlobalVariables.currentUser.lastName;
             return View();
+        }
+
+        private bool CheckString(string str)
+        {
+            if(str==null)
+            {
+                return false;
+            }
+            else
+            {
+                return !str.Contains(" ");
+            }
         }
 
         [HttpPost]
         public ActionResult EditUser(User user)
         {
-            user.Id = GlobalVariables.currentUser.Id;
-            string result = UpdateUser(user);
-            if (result.Contains("success"))
+            if(CheckString(user.email) && CheckString(user.firstName) && CheckString(user.lastName))
             {
-                ViewBag.Email = GlobalVariables.currentUser.Email = user.Email;
-                ViewBag.FirstName = GlobalVariables.currentUser.FirstName = user.FirstName;
-                ViewBag.LastName = GlobalVariables.currentUser.LastName = user.LastName;
+                user.id = GlobalVariables.currentUser.id;
+                string result = client.UpdateUser(user);
+                if (result.Contains("success"))
+                {
+                    ViewBag.Email = GlobalVariables.currentUser.email = user.email;
+                    ViewBag.FirstName = GlobalVariables.currentUser.firstName = user.firstName;
+                    ViewBag.LastName = GlobalVariables.currentUser.lastName = user.lastName;
+                }
+                else
+                {
+                    GlobalVariables.responseMessage = result;
+                }
             }
             else
             {
-                GlobalVariables.responseMessage = result;
+                GlobalVariables.responseMessage = "Fields cannot contain spaces or be empty";
             }
-            
+
             return View();
         }
 
         public ActionResult DeleteUser(int id)
         {
-            string result;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/delete_user/" + id);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                result = reader.ReadToEnd();
-            }
+            var result = client.DeleteUser(id.ToString());
             if (result.Contains("success"))
             {
                 GlobalVariables.currentUser = null;
@@ -145,49 +132,29 @@ namespace ShopUI.Controllers
             }
         }
 
-        //TODO понять как заново прокинуть сюда id при редиректе(удаление/изменение)
         public ActionResult EditBook(int id)
         {
-            ViewBag.Msg = GlobalVariables.responseMessage;
-            GlobalVariables.responseMessage = null;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/get_book/" + id);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            BookResponse result = client.GetBook(id.ToString());
+            ViewBag.Name = result.book.name;
+            ViewBag.Cost = result.book.cost;
+            ViewBag.Description = result.book.description;
+            ViewBag.Id = id;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                var resp = reader.ReadToEnd();
-                BookResponse result = new JavaScriptSerializer().Deserialize<BookResponse>(resp);
-                ViewBag.Name = result.Book.Name;
-                ViewBag.Cost = result.Book.Cost;
-                ViewBag.Description = result.Book.Description;
-                ViewBag.Id = id;
-            }
             return View();
         }
 
         [HttpPost]
         public ActionResult EditBook(int id, Book book)
         {
-            book.Id = id;
-            GlobalVariables.responseMessage = UpdateBook(book);
+            book.id = id;
+            GlobalVariables.responseMessage = client.UpdateBook(book);
           
             return View();
         }
 
         public ActionResult DeleteBook(int id)
         {
-            string result;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/delete_book/" + id);
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                result = reader.ReadToEnd();
-            }
+            var result = client.DeleteBook(id.ToString());
             if (result.Contains("success"))
             {
                 return RedirectToAction("Index");
@@ -205,12 +172,12 @@ namespace ShopUI.Controllers
             if (GlobalVariables.booksInOrder.Count>0) { 
                 OrderRequest request = new OrderRequest
                 {
-                    Books = GlobalVariables.booksInOrder,
-                    UserId = GlobalVariables.currentUser.Id,
-                    TotalPayment = GlobalVariables.totalPayment,
+                    books = GlobalVariables.booksInOrder.ToArray<int>(),
+                    userId = GlobalVariables.currentUser.id,
+                    totalPayment = GlobalVariables.totalPayment,
                 };
-            
-                SendNewOrderRequest(request);
+
+                client.NewOrder(request);
 
                 GlobalVariables.booksInOrder.Clear();
                 GlobalVariables.booksNames.Clear();
@@ -236,7 +203,12 @@ namespace ShopUI.Controllers
         [HttpPost]
         public ActionResult Auth(Auth authData)
         {
-            string authResult = SendAuthRequest(authData);
+            UserResponse userResp = client.Auth(authData);
+            if (userResp.status == (int)GlobalVariables.STATUSES.OK)
+            {
+                GlobalVariables.currentUser = userResp.user;
+            }
+            string authResult = userResp.message;
             if (authResult.Contains("Success"))
             {
                 return RedirectToAction("Index");
@@ -247,141 +219,5 @@ namespace ShopUI.Controllers
                 return View();
             }
         }
-
-        public AllBooksResponse GetAllBooks()
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/get_all_books");
-            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                var resp = reader.ReadToEnd();
-                AllBooksResponse result = new JavaScriptSerializer().Deserialize<AllBooksResponse>(resp);
-                return result;
-            }
-        }
-
-        public string SendAuthRequest(Auth data)
-        {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/auth");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                MemoryStream stream = new MemoryStream();
-                new DataContractJsonSerializer(typeof(Auth)).WriteObject(stream, data);
-                stream.Position = 0;
-                StreamReader sr = new StreamReader(stream);
-                string json = sr.ReadToEnd();
-
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                UserResponse userResp = new JavaScriptSerializer().Deserialize<UserResponse>(result);
-                if (userResp.Status == (int)GlobalVariables.STATUSES.OK)
-                {
-                    GlobalVariables.currentUser = userResp.User;
-                }
-                return userResp.Message;
-            }
-        }
-
-
-        public string UpdateUser(User data)
-        {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/update_user");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                MemoryStream stream = new MemoryStream();
-                new DataContractJsonSerializer(typeof(User)).WriteObject(stream, data);
-                stream.Position = 0;
-                StreamReader sr = new StreamReader(stream);
-                string json = sr.ReadToEnd();
-
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                return result;
-            }
-        }
-
-
-        public string UpdateBook(Book data)
-        {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/update_book");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                MemoryStream stream = new MemoryStream();
-                new DataContractJsonSerializer(typeof(Book)).WriteObject(stream, data);
-                stream.Position = 0;
-                StreamReader sr = new StreamReader(stream);
-                string json = sr.ReadToEnd();
-
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                return result;
-            }
-        }
-
-        public string SendNewOrderRequest(OrderRequest data)
-        {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://localhost:55/RestService.svc/new_order");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                MemoryStream stream = new MemoryStream();
-                new DataContractJsonSerializer(typeof(OrderRequest)).WriteObject(stream, data);
-                stream.Position = 0;
-                StreamReader sr = new StreamReader(stream);
-                string json = sr.ReadToEnd();
-
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-                Order orderResp = new JavaScriptSerializer().Deserialize<Order>(result);
-                //if (orderResp.Status == (int)GlobalVariables.STATUSES.OK)
-                //{
-                //    GlobalVariables.currentUser = userResp.User;
-                //}
-                return "success";
-            }
-        }
-
     }
 }

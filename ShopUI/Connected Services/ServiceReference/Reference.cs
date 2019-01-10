@@ -15,21 +15,18 @@ namespace ShopUI.ServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="BaseResponse", Namespace="http://schemas.datacontract.org/2004/07/TestService.Models")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Auth", Namespace="http://schemas.datacontract.org/2004/07/TestService.Models")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.BookResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.OrderResponse))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.UserResponse))]
-    public partial class BaseResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Auth : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageField;
+        private string emailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int StatusField;
+        private string passwordField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -42,27 +39,93 @@ namespace ShopUI.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
+        public string email {
             get {
-                return this.MessageField;
+                return this.emailField;
             }
             set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
+                if ((object.ReferenceEquals(this.emailField, value) != true)) {
+                    this.emailField = value;
+                    this.RaisePropertyChanged("email");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Status {
+        public string password {
             get {
-                return this.StatusField;
+                return this.passwordField;
             }
             set {
-                if ((this.StatusField.Equals(value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
+                if ((object.ReferenceEquals(this.passwordField, value) != true)) {
+                    this.passwordField = value;
+                    this.RaisePropertyChanged("password");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseResponse", Namespace="http://schemas.datacontract.org/2004/07/TestService.Models")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.BookResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.AllBooksResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.OrderResponse))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.OrdersByUser))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(ShopUI.ServiceReference.UserResponse))]
+    public partial class BaseResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string messageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int statusField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string message {
+            get {
+                return this.messageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.messageField, value) != true)) {
+                    this.messageField = value;
+                    this.RaisePropertyChanged("message");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int status {
+            get {
+                return this.statusField;
+            }
+            set {
+                if ((this.statusField.Equals(value) != true)) {
+                    this.statusField = value;
+                    this.RaisePropertyChanged("status");
                 }
             }
         }
@@ -84,17 +147,40 @@ namespace ShopUI.ServiceReference {
     public partial class BookResponse : ShopUI.ServiceReference.BaseResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ShopUI.ServiceReference.Book BookField;
+        private ShopUI.ServiceReference.Book bookField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ShopUI.ServiceReference.Book Book {
+        public ShopUI.ServiceReference.Book book {
             get {
-                return this.BookField;
+                return this.bookField;
             }
             set {
-                if ((object.ReferenceEquals(this.BookField, value) != true)) {
-                    this.BookField = value;
-                    this.RaisePropertyChanged("Book");
+                if ((object.ReferenceEquals(this.bookField, value) != true)) {
+                    this.bookField = value;
+                    this.RaisePropertyChanged("book");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="AllBooksResponse", Namespace="http://schemas.datacontract.org/2004/07/TestService.Models")]
+    [System.SerializableAttribute()]
+    public partial class AllBooksResponse : ShopUI.ServiceReference.BaseResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ShopUI.ServiceReference.Book[] booksField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ShopUI.ServiceReference.Book[] books {
+            get {
+                return this.booksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.booksField, value) != true)) {
+                    this.booksField = value;
+                    this.RaisePropertyChanged("books");
                 }
             }
         }
@@ -107,17 +193,40 @@ namespace ShopUI.ServiceReference {
     public partial class OrderResponse : ShopUI.ServiceReference.BaseResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ShopUI.ServiceReference.OrderRequest OrderDataField;
+        private ShopUI.ServiceReference.OrderData orderDataField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ShopUI.ServiceReference.OrderRequest OrderData {
+        public ShopUI.ServiceReference.OrderData orderData {
             get {
-                return this.OrderDataField;
+                return this.orderDataField;
             }
             set {
-                if ((object.ReferenceEquals(this.OrderDataField, value) != true)) {
-                    this.OrderDataField = value;
-                    this.RaisePropertyChanged("OrderData");
+                if ((object.ReferenceEquals(this.orderDataField, value) != true)) {
+                    this.orderDataField = value;
+                    this.RaisePropertyChanged("orderData");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrdersByUser", Namespace="http://schemas.datacontract.org/2004/07/TestService.Models")]
+    [System.SerializableAttribute()]
+    public partial class OrdersByUser : ShopUI.ServiceReference.BaseResponse {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ShopUI.ServiceReference.OrderData[] orderDataField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ShopUI.ServiceReference.OrderData[] orderData {
+            get {
+                return this.orderDataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.orderDataField, value) != true)) {
+                    this.orderDataField = value;
+                    this.RaisePropertyChanged("orderData");
                 }
             }
         }
@@ -130,17 +239,17 @@ namespace ShopUI.ServiceReference {
     public partial class UserResponse : ShopUI.ServiceReference.BaseResponse {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private ShopUI.ServiceReference.User UserField;
+        private ShopUI.ServiceReference.User userField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public ShopUI.ServiceReference.User User {
+        public ShopUI.ServiceReference.User user {
             get {
-                return this.UserField;
+                return this.userField;
             }
             set {
-                if ((object.ReferenceEquals(this.UserField, value) != true)) {
-                    this.UserField = value;
-                    this.RaisePropertyChanged("User");
+                if ((object.ReferenceEquals(this.userField, value) != true)) {
+                    this.userField = value;
+                    this.RaisePropertyChanged("user");
                 }
             }
         }
@@ -156,19 +265,19 @@ namespace ShopUI.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool DeletedField;
+        private bool deletedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
+        private string emailField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FirstNameField;
+        private string firstNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private int idField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LastNameField;
+        private string lastNameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -181,66 +290,66 @@ namespace ShopUI.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Deleted {
+        public bool deleted {
             get {
-                return this.DeletedField;
+                return this.deletedField;
             }
             set {
-                if ((this.DeletedField.Equals(value) != true)) {
-                    this.DeletedField = value;
-                    this.RaisePropertyChanged("Deleted");
+                if ((this.deletedField.Equals(value) != true)) {
+                    this.deletedField = value;
+                    this.RaisePropertyChanged("deleted");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
+        public string email {
             get {
-                return this.EmailField;
+                return this.emailField;
             }
             set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
+                if ((object.ReferenceEquals(this.emailField, value) != true)) {
+                    this.emailField = value;
+                    this.RaisePropertyChanged("email");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FirstName {
+        public string firstName {
             get {
-                return this.FirstNameField;
+                return this.firstNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
-                    this.FirstNameField = value;
-                    this.RaisePropertyChanged("FirstName");
+                if ((object.ReferenceEquals(this.firstNameField, value) != true)) {
+                    this.firstNameField = value;
+                    this.RaisePropertyChanged("firstName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public int id {
             get {
-                return this.IdField;
+                return this.idField;
             }
             set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LastName {
+        public string lastName {
             get {
-                return this.LastNameField;
+                return this.lastNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
-                    this.LastNameField = value;
-                    this.RaisePropertyChanged("LastName");
+                if ((object.ReferenceEquals(this.lastNameField, value) != true)) {
+                    this.lastNameField = value;
+                    this.RaisePropertyChanged("lastName");
                 }
             }
         }
@@ -265,19 +374,19 @@ namespace ShopUI.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int CostField;
+        private int costField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool DeletedField;
+        private bool deletedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
+        private string descriptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private int idField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
+        private string nameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -290,66 +399,175 @@ namespace ShopUI.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Cost {
+        public int cost {
             get {
-                return this.CostField;
+                return this.costField;
             }
             set {
-                if ((this.CostField.Equals(value) != true)) {
-                    this.CostField = value;
-                    this.RaisePropertyChanged("Cost");
+                if ((this.costField.Equals(value) != true)) {
+                    this.costField = value;
+                    this.RaisePropertyChanged("cost");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Deleted {
+        public bool deleted {
             get {
-                return this.DeletedField;
+                return this.deletedField;
             }
             set {
-                if ((this.DeletedField.Equals(value) != true)) {
-                    this.DeletedField = value;
-                    this.RaisePropertyChanged("Deleted");
+                if ((this.deletedField.Equals(value) != true)) {
+                    this.deletedField = value;
+                    this.RaisePropertyChanged("deleted");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
+        public string description {
             get {
-                return this.DescriptionField;
+                return this.descriptionField;
             }
             set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
+                if ((object.ReferenceEquals(this.descriptionField, value) != true)) {
+                    this.descriptionField = value;
+                    this.RaisePropertyChanged("description");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public int id {
             get {
-                return this.IdField;
+                return this.idField;
             }
             set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
+        public string name {
             get {
-                return this.NameField;
+                return this.nameField;
             }
             set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="OrderData", Namespace="http://schemas.datacontract.org/2004/07/TestService.Models")]
+    [System.SerializableAttribute()]
+    public partial class OrderData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private ShopUI.ServiceReference.Book[] booksField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int idField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool statusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int totalPaymentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int userIdField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public ShopUI.ServiceReference.Book[] books {
+            get {
+                return this.booksField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.booksField, value) != true)) {
+                    this.booksField = value;
+                    this.RaisePropertyChanged("books");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int id {
+            get {
+                return this.idField;
+            }
+            set {
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool status {
+            get {
+                return this.statusField;
+            }
+            set {
+                if ((this.statusField.Equals(value) != true)) {
+                    this.statusField = value;
+                    this.RaisePropertyChanged("status");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int totalPayment {
+            get {
+                return this.totalPaymentField;
+            }
+            set {
+                if ((this.totalPaymentField.Equals(value) != true)) {
+                    this.totalPaymentField = value;
+                    this.RaisePropertyChanged("totalPayment");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int userId {
+            get {
+                return this.userIdField;
+            }
+            set {
+                if ((this.userIdField.Equals(value) != true)) {
+                    this.userIdField = value;
+                    this.RaisePropertyChanged("userId");
                 }
             }
         }
@@ -374,19 +592,19 @@ namespace ShopUI.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int[] BooksField;
+        private int[] booksField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private int idField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool StatusField;
+        private bool statusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TotalPaymentField;
+        private int totalPaymentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int UserIdField;
+        private int userIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -399,66 +617,66 @@ namespace ShopUI.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int[] Books {
+        public int[] books {
             get {
-                return this.BooksField;
+                return this.booksField;
             }
             set {
-                if ((object.ReferenceEquals(this.BooksField, value) != true)) {
-                    this.BooksField = value;
-                    this.RaisePropertyChanged("Books");
+                if ((object.ReferenceEquals(this.booksField, value) != true)) {
+                    this.booksField = value;
+                    this.RaisePropertyChanged("books");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public int id {
             get {
-                return this.IdField;
+                return this.idField;
             }
             set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Status {
+        public bool status {
             get {
-                return this.StatusField;
+                return this.statusField;
             }
             set {
-                if ((this.StatusField.Equals(value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
+                if ((this.statusField.Equals(value) != true)) {
+                    this.statusField = value;
+                    this.RaisePropertyChanged("status");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TotalPayment {
+        public int totalPayment {
             get {
-                return this.TotalPaymentField;
+                return this.totalPaymentField;
             }
             set {
-                if ((this.TotalPaymentField.Equals(value) != true)) {
-                    this.TotalPaymentField = value;
-                    this.RaisePropertyChanged("TotalPayment");
+                if ((this.totalPaymentField.Equals(value) != true)) {
+                    this.totalPaymentField = value;
+                    this.RaisePropertyChanged("totalPayment");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int UserId {
+        public int userId {
             get {
-                return this.UserIdField;
+                return this.userIdField;
             }
             set {
-                if ((this.UserIdField.Equals(value) != true)) {
-                    this.UserIdField = value;
-                    this.RaisePropertyChanged("UserId");
+                if ((this.userIdField.Equals(value) != true)) {
+                    this.userIdField = value;
+                    this.RaisePropertyChanged("userId");
                 }
             }
         }
@@ -483,16 +701,16 @@ namespace ShopUI.ServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
+        private int idField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool StatusField;
+        private bool statusField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TotalPaymentField;
+        private int totalPaymentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int UserIdField;
+        private int userIdField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -505,53 +723,53 @@ namespace ShopUI.ServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
+        public int id {
             get {
-                return this.IdField;
+                return this.idField;
             }
             set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
+                if ((this.idField.Equals(value) != true)) {
+                    this.idField = value;
+                    this.RaisePropertyChanged("id");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Status {
+        public bool status {
             get {
-                return this.StatusField;
+                return this.statusField;
             }
             set {
-                if ((this.StatusField.Equals(value) != true)) {
-                    this.StatusField = value;
-                    this.RaisePropertyChanged("Status");
+                if ((this.statusField.Equals(value) != true)) {
+                    this.statusField = value;
+                    this.RaisePropertyChanged("status");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int TotalPayment {
+        public int totalPayment {
             get {
-                return this.TotalPaymentField;
+                return this.totalPaymentField;
             }
             set {
-                if ((this.TotalPaymentField.Equals(value) != true)) {
-                    this.TotalPaymentField = value;
-                    this.RaisePropertyChanged("TotalPayment");
+                if ((this.totalPaymentField.Equals(value) != true)) {
+                    this.totalPaymentField = value;
+                    this.RaisePropertyChanged("totalPayment");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int UserId {
+        public int userId {
             get {
-                return this.UserIdField;
+                return this.userIdField;
             }
             set {
-                if ((this.UserIdField.Equals(value) != true)) {
-                    this.UserIdField = value;
-                    this.RaisePropertyChanged("UserId");
+                if ((this.userIdField.Equals(value) != true)) {
+                    this.userIdField = value;
+                    this.RaisePropertyChanged("userId");
                 }
             }
         }
@@ -569,6 +787,12 @@ namespace ShopUI.ServiceReference {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IRestService")]
     public interface IRestService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/Auth", ReplyAction="http://tempuri.org/IRestService/AuthResponse")]
+        ShopUI.ServiceReference.UserResponse Auth(ShopUI.ServiceReference.Auth data);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/Auth", ReplyAction="http://tempuri.org/IRestService/AuthResponse")]
+        System.Threading.Tasks.Task<ShopUI.ServiceReference.UserResponse> AuthAsync(ShopUI.ServiceReference.Auth data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/GetUser", ReplyAction="http://tempuri.org/IRestService/GetUserResponse")]
         ShopUI.ServiceReference.UserResponse GetUser(string id);
@@ -606,6 +830,12 @@ namespace ShopUI.ServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/GetBook", ReplyAction="http://tempuri.org/IRestService/GetBookResponse")]
         System.Threading.Tasks.Task<ShopUI.ServiceReference.BookResponse> GetBookAsync(string id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/AllBooks", ReplyAction="http://tempuri.org/IRestService/AllBooksResponse")]
+        ShopUI.ServiceReference.AllBooksResponse AllBooks();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/AllBooks", ReplyAction="http://tempuri.org/IRestService/AllBooksResponse")]
+        System.Threading.Tasks.Task<ShopUI.ServiceReference.AllBooksResponse> AllBooksAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/DeleteBook", ReplyAction="http://tempuri.org/IRestService/DeleteBookResponse")]
         string DeleteBook(string id);
         
@@ -635,6 +865,12 @@ namespace ShopUI.ServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/GetOrder", ReplyAction="http://tempuri.org/IRestService/GetOrderResponse")]
         System.Threading.Tasks.Task<ShopUI.ServiceReference.OrderResponse> GetOrderAsync(string id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/GetOrdersByUserId", ReplyAction="http://tempuri.org/IRestService/GetOrdersByUserIdResponse")]
+        ShopUI.ServiceReference.OrdersByUser GetOrdersByUserId(string id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/GetOrdersByUserId", ReplyAction="http://tempuri.org/IRestService/GetOrdersByUserIdResponse")]
+        System.Threading.Tasks.Task<ShopUI.ServiceReference.OrdersByUser> GetOrdersByUserIdAsync(string id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRestService/PayOrder", ReplyAction="http://tempuri.org/IRestService/PayOrderResponse")]
         string PayOrder(string id);
@@ -674,6 +910,14 @@ namespace ShopUI.ServiceReference {
         
         public RestServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public ShopUI.ServiceReference.UserResponse Auth(ShopUI.ServiceReference.Auth data) {
+            return base.Channel.Auth(data);
+        }
+        
+        public System.Threading.Tasks.Task<ShopUI.ServiceReference.UserResponse> AuthAsync(ShopUI.ServiceReference.Auth data) {
+            return base.Channel.AuthAsync(data);
         }
         
         public ShopUI.ServiceReference.UserResponse GetUser(string id) {
@@ -724,6 +968,14 @@ namespace ShopUI.ServiceReference {
             return base.Channel.GetBookAsync(id);
         }
         
+        public ShopUI.ServiceReference.AllBooksResponse AllBooks() {
+            return base.Channel.AllBooks();
+        }
+        
+        public System.Threading.Tasks.Task<ShopUI.ServiceReference.AllBooksResponse> AllBooksAsync() {
+            return base.Channel.AllBooksAsync();
+        }
+        
         public string DeleteBook(string id) {
             return base.Channel.DeleteBook(id);
         }
@@ -762,6 +1014,14 @@ namespace ShopUI.ServiceReference {
         
         public System.Threading.Tasks.Task<ShopUI.ServiceReference.OrderResponse> GetOrderAsync(string id) {
             return base.Channel.GetOrderAsync(id);
+        }
+        
+        public ShopUI.ServiceReference.OrdersByUser GetOrdersByUserId(string id) {
+            return base.Channel.GetOrdersByUserId(id);
+        }
+        
+        public System.Threading.Tasks.Task<ShopUI.ServiceReference.OrdersByUser> GetOrdersByUserIdAsync(string id) {
+            return base.Channel.GetOrdersByUserIdAsync(id);
         }
         
         public string PayOrder(string id) {

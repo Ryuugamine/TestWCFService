@@ -9,6 +9,12 @@
       <xsd:import schemaLocation="http://localhost:55/RestService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IRestService_Auth_InputMessage">
+    <wsdl:part name="parameters" element="tns:Auth" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_Auth_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthResponse" />
+  </wsdl:message>
   <wsdl:message name="IRestService_GetUser_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUser" />
   </wsdl:message>
@@ -45,6 +51,12 @@
   <wsdl:message name="IRestService_GetBook_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBookResponse" />
   </wsdl:message>
+  <wsdl:message name="IRestService_AllBooks_InputMessage">
+    <wsdl:part name="parameters" element="tns:AllBooks" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_AllBooks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AllBooksResponse" />
+  </wsdl:message>
   <wsdl:message name="IRestService_DeleteBook_InputMessage">
     <wsdl:part name="parameters" element="tns:DeleteBook" />
   </wsdl:message>
@@ -75,6 +87,12 @@
   <wsdl:message name="IRestService_GetOrder_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOrderResponse" />
   </wsdl:message>
+  <wsdl:message name="IRestService_GetOrdersByUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersByUserId" />
+  </wsdl:message>
+  <wsdl:message name="IRestService_GetOrdersByUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrdersByUserIdResponse" />
+  </wsdl:message>
   <wsdl:message name="IRestService_PayOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:PayOrder" />
   </wsdl:message>
@@ -88,6 +106,10 @@
     <wsdl:part name="parameters" element="tns:NewOrderResponse" />
   </wsdl:message>
   <wsdl:portType name="IRestService">
+    <wsdl:operation name="Auth">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/Auth" message="tns:IRestService_Auth_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/AuthResponse" message="tns:IRestService_Auth_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetUser" message="tns:IRestService_GetUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetUserResponse" message="tns:IRestService_GetUser_OutputMessage" />
@@ -112,6 +134,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetBook" message="tns:IRestService_GetBook_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetBookResponse" message="tns:IRestService_GetBook_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AllBooks">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/AllBooks" message="tns:IRestService_AllBooks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/AllBooksResponse" message="tns:IRestService_AllBooks_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="DeleteBook">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestService/DeleteBook" message="tns:IRestService_DeleteBook_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRestService/DeleteBookResponse" message="tns:IRestService_DeleteBook_OutputMessage" />
@@ -131,6 +157,10 @@
     <wsdl:operation name="GetOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetOrder" message="tns:IRestService_GetOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetOrderResponse" message="tns:IRestService_GetOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrdersByUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRestService/GetOrdersByUserId" message="tns:IRestService_GetOrdersByUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRestService/GetOrdersByUserIdResponse" message="tns:IRestService_GetOrdersByUserId_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="PayOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IRestService/PayOrder" message="tns:IRestService_PayOrder_InputMessage" />
