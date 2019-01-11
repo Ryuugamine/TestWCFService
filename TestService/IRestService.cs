@@ -63,11 +63,12 @@ namespace TestService
             UriTemplate = "get_book/{id}")]
         BookResponse GetBook(string id);
 
+        //тут я пытался чуть поменять uri
         [OperationContract]
         [WebInvoke(Method = "GET",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "get_all_books")]
+            UriTemplate = "allBooks")]
         AllBooksResponse AllBooks();
 
         [OperationContract]

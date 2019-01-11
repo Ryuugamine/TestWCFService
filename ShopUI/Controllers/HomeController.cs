@@ -16,7 +16,8 @@ namespace ShopUI.Controllers
         RestServiceClient client = new RestServiceClient();
         public ActionResult Index()
         {
-            ViewBag.Books = client.AllBooks().books;
+            var resp = client.AllBooks();
+            ViewBag.Books = resp.books;
             return View();
         }
 
