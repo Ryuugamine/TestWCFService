@@ -44,9 +44,9 @@
         @foreach (var b in ViewBag.Books)
         {
             <tr>
-                <td><p><a href="/Home/Book/@b.Id">@b.Name</a></p></td>
-                <td><p>@b.Cost</p></td>
-                <td><p><a href="/Home/AddBook?id=@b.Id&cost=@b.Cost&name=@b.Name">Добавить</a></p></td>
+                <td><p><a href="/Home/Book/@b.id">@b.name</a></p></td>
+                <td><p>@b.cost</p></td>
+                <td><p><a href="/Home/AddBook?id=@b.id&cost=@b.cost&name=@b.name">Добавить</a></p></td>
             </tr>
         }
     </table>
