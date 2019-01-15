@@ -2,27 +2,20 @@
 @{
     Layout = null;
 }
+
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Auth</title>
-    <style>
-        a{
-            padding-right: 16px;
-        }
-    </style>
+    <title>RestoreUser</title>
 </head>
 <body>
     <form method="post" action="">
         <p>Введите email: </p>
         <input type="text" name="Email" />
-        <p>Введите пароль:</p>
-        <input type="text" name="Password" />
         <input type="submit" value="Отправить" />
         <p>@ViewBag.Msg</p>
-        <p><a href="/Home/CreateUser">Новый пользователь</a>   <a href="/Home/RestoreUser">Восстановление пользователя</a></p>
     </form>
 </body>
 </html>

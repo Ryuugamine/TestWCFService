@@ -14,5 +14,9 @@ namespace ShopUI
         public static User currentUser;
         public static int totalPayment = 0;
         public static string responseMessage;
+
+        public const string EDIT_USER_ERROR = "Fields can not contain spaces or be empty";
+        public const string EDIT_BOOK_ERROR = "Fields can not be empty and the price can not be less than or equal to zero ";
+        public const string CREATE_ORDER_ERROR = "Add one or more books for create order";
     }
 }

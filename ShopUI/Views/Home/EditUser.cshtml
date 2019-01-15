@@ -1,4 +1,4 @@
-﻿
+﻿@model ShopUI.ServiceReference.User
 @{
     Layout = null;
 }
@@ -13,14 +13,14 @@
 <body>
     <form method="post" action="">
         <p>Email: </p>
-        <input type="text" name="Email" value="@ViewBag.Email" />
+        <input type="text" name="Email" value="@Model.email" />
         <p>Имя:</p>
-        <input type="text" name="FirstName" value="@ViewBag.FirstName"/>
+        <input type="text" name="FirstName" value="@Model.firstName"/>
         <p>Фамилия:</p>
-        <input type="text" name="LastName" value="@ViewBag.LastName"/>
+        <input type="text" name="LastName" value="@Model.lastName"/>
         <input type="submit" value="Отправить" />
 
-        <p><a href="/Home/DeleteUser/@ViewBag.Id">Удалить пользователя</a></p>
+        <p><a href="/Home/DeleteUser/@Model.id">Удалить пользователя</a></p>
         <p>@ViewBag.Msg</p>
     </form>
 </body>

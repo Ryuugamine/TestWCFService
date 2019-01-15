@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
 }
+@model IEnumerable<ShopUI.ServiceReference.Book>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -8,8 +10,11 @@
     <style>
         p {
             padding: 5px; /* Поля вокруг текста */
-            padding-right: 90px; /* Поле справа */
+            padding-right: 32px; /* Поле справа */
             text-align: justify; /* Выравнивание по ширине */
+        }
+        a{
+            margin-right: 16px;
         }
     </style>
     <script src="jquery-1.7.1.js" type="text/javascript"></script>
@@ -36,12 +41,13 @@
     </script>*@
 </head>
 <body>
+    @{Html.RenderPartial("MenuFragment");}
     <table>
         <tr>
             <td><p>Название</p></td>
             <td><p>Цена</p></td>
         </tr>
-        @foreach (var b in ViewBag.Books)
+        @foreach (var b in Model)
         {
             <tr>
                 <td><p><a href="/Home/Book/@b.id">@b.name</a></p></td>
@@ -52,8 +58,6 @@
     </table>
     <p><a href="/Home/Buy">Оформить заказ</a></p>
     <p></p>
-    <p><a href="/Home/EditUser">Изменить данные пользователя</a></p>
-    <p><a href="/Home/OrdersList">Список заказов</a></p>
 
 
     @*<div>

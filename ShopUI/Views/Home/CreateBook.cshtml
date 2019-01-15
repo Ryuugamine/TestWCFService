@@ -1,26 +1,23 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-@model ShopUI.ServiceReference.Book
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>EditBook</title>
+    <title>CreateBook</title>
 </head>
 <body>
     <form method="post" action="">
         <p>Название: </p>
-        <input type="text" name="Name" value="@Model.name" />
+        <input type="text" name="Name" value="" />
         <p>Цена:</p>
-        <input type="text" name="Cost" value="@Model.cost" />
+        <input type="text" name="Cost" value="" />
         <p>Описание:</p>
-        <input type="text" name="Description" value="@Model.description" />
+        <input type="text" name="Description" value="" />
         <input type="submit" value="Отправить" />
 
-        <p><a href="/Home/DeleteBook/@Model.id">Удалить книгу</a></p>
         <p>@ViewBag.Msg</p>
     </form>
 </body>

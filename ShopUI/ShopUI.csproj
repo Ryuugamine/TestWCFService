@@ -250,6 +250,10 @@
     <Content Include="Views\Home\Book.cshtml" />
     <Content Include="Views\Home\EditBook.cshtml" />
     <Content Include="Views\Home\OrdersList.cshtml" />
+    <Content Include="Views\Home\MenuFragment.cshtml" />
+    <Content Include="Views\Home\CreateBook.cshtml" />
+    <Content Include="Views\Home\CreateUser.cshtml" />
+    <Content Include="Views\Home\RestoreUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

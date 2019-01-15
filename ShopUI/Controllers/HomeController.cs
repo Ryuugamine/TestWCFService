@@ -16,27 +16,75 @@ namespace ShopUI.Controllers
         RestServiceClient client = new RestServiceClient();
         public ActionResult Index()
         {
-            //AllBooksResponse resp = client.AllBooks();
             var resp = client.AllBooks();
-            ViewBag.Books = resp.books;
-            return View();
+            return View(resp.books);
         }
 
         public ActionResult Book(int id)
         {
             BookResponse result = client.GetBook(id.ToString());
 
-            ViewBag.Name = result.book.name;
-            ViewBag.Cost = result.book.cost;
-            ViewBag.Description = result.book.description;
-            ViewBag.Id = id;
-
-            return View();
+            return View(result.book);
         }
 
         public ActionResult Auth()
         {
             return View();
+        }
+
+        public ActionResult RestoreUser()
+        {
+            ViewBag.Msg = GlobalVariables.responseMessage;
+            GlobalVariables.responseMessage = null;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RestoreUser(string email)
+        {
+            if (CheckString(email))
+            {
+                string result = client.RestoreUser(email);
+                if (result.Contains("success"))
+                {
+                    return RedirectToAction("Auth");
+                }
+                else
+                {
+                    GlobalVariables.responseMessage = result;
+                }
+            }
+            else
+            {
+                GlobalVariables.responseMessage = GlobalVariables.EDIT_USER_ERROR;
+            }
+            return View();
+        }
+
+        public ActionResult CreateBook()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateBook(Book book)
+        {
+            if (book.cost.ToString() != null && book.cost > 0 && book.name != null)
+            {
+                client.NewBook(book);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                GlobalVariables.responseMessage = GlobalVariables.EDIT_BOOK_ERROR;
+            }
+            
+            return View();
+        }
+
+        public ActionResult MenuFragment()
+        {
+            return PartialView();
         }
 
         public ActionResult Buy()
@@ -73,10 +121,11 @@ namespace ShopUI.Controllers
         {
             ViewBag.Msg = GlobalVariables.responseMessage;
             GlobalVariables.responseMessage = null;
-            ViewBag.Id = GlobalVariables.currentUser.id;
-            ViewBag.Email = GlobalVariables.currentUser.email;
-            ViewBag.FirstName = GlobalVariables.currentUser.firstName;
-            ViewBag.LastName = GlobalVariables.currentUser.lastName;
+            return View(GlobalVariables.currentUser);
+        }
+
+        public ActionResult CreateUser()
+        {
             return View();
         }
 
@@ -101,9 +150,9 @@ namespace ShopUI.Controllers
                 string result = client.UpdateUser(user);
                 if (result.Contains("success"))
                 {
-                    ViewBag.Email = GlobalVariables.currentUser.email = user.email;
-                    ViewBag.FirstName = GlobalVariables.currentUser.firstName = user.firstName;
-                    ViewBag.LastName = GlobalVariables.currentUser.lastName = user.lastName;
+                    GlobalVariables.currentUser.email = user.email;
+                    GlobalVariables.currentUser.firstName = user.firstName;
+                    GlobalVariables.currentUser.lastName = user.lastName;
                 }
                 else
                 {
@@ -112,10 +161,33 @@ namespace ShopUI.Controllers
             }
             else
             {
-                GlobalVariables.responseMessage = "Fields cannot contain spaces or be empty";
+                GlobalVariables.responseMessage = GlobalVariables.EDIT_USER_ERROR;
             }
 
-            return View();
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult CreateUser(User user)
+        {
+            if(CheckString(user.email) && CheckString(user.firstName) && CheckString(user.lastName))
+            {
+                string result = client.NewUser(user);
+                if (result.Contains("created"))
+                {
+                    return RedirectToAction("Auth");
+                }
+                else
+                {
+                    GlobalVariables.responseMessage = result;
+                }
+            }
+            else
+            {
+                GlobalVariables.responseMessage = GlobalVariables.EDIT_USER_ERROR;
+            }
+
+            return View(user);
         }
 
         public ActionResult DeleteUser(int id)
@@ -137,21 +209,26 @@ namespace ShopUI.Controllers
         public ActionResult EditBook(int id)
         {
             BookResponse result = client.GetBook(id.ToString());
-            ViewBag.Name = result.book.name;
-            ViewBag.Cost = result.book.cost;
-            ViewBag.Description = result.book.description;
-            ViewBag.Id = id;
-
-            return View();
+            ViewBag.Msg = GlobalVariables.responseMessage;
+            GlobalVariables.responseMessage = null;
+            return View(result.book);
         }
 
         [HttpPost]
         public ActionResult EditBook(int id, Book book)
         {
             book.id = id;
-            GlobalVariables.responseMessage = client.UpdateBook(book);
+            if (book.cost.ToString()!=null && book.cost>0 && book.name!=null)
+            {
+                GlobalVariables.responseMessage = client.UpdateBook(book);
+            }
+            else
+            {
+                GlobalVariables.responseMessage = GlobalVariables.EDIT_BOOK_ERROR;
+            }
+            
           
-            return View();
+            return View(book);
         }
 
         public ActionResult DeleteBook(int id)
@@ -188,7 +265,7 @@ namespace ShopUI.Controllers
             }
             else
             {
-                GlobalVariables.responseMessage = "Add one or more books for create order";
+                GlobalVariables.responseMessage = GlobalVariables.CREATE_ORDER_ERROR;
                 return RedirectToAction("Buy");
             }
         }
